@@ -86,9 +86,6 @@ app.post('/api/persons', (req, res, next) => {
   .catch(error => next(error))
 })
 
-const unknownEndpoint = (req, res) => {
-  res.status(404).send({ error: 'unknown endpoint' })
-}
 
 const errorHandler = (error, req, res, next) => {
   console.error(error.message)
@@ -102,8 +99,6 @@ const errorHandler = (error, req, res, next) => {
   next(error)
 }
 
-// olemattomien osoitteiden käsittely
-app.use(unknownEndpoint)
 
 //Error handlausta
 app.use(errorHandler)
