@@ -26,15 +26,15 @@ const person = new Person({
 })
 
 if(process.argv.length>3) {
-  person.save().then(result => {
+  person.save().then(() => {
     console.log('person saved!')
     mongoose.connection.close()
-  }) 
-} else {
- Person.find({}).then(result => {
-  result.forEach(person =>{
-    console.log(person)
   })
-  mongoose.connection.close()
-  } )
+} else {
+  Person.find({}).then(result => {
+    result.forEach(person => {
+      console.log(person)
+    })
+    mongoose.connection.close()
+  })
 }
