@@ -14,7 +14,7 @@ morgan.token('body', (req, res) => JSON.stringify(req.body))
 
 app.use(express.json())
 //Main page
-app.get('/', (req, res) => {
+app.get('build/index.html', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
