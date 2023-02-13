@@ -10,12 +10,12 @@ const Person = require('./models/person')
 app.use(express.static('build'))
 app.use(cors())
 app.use(morgan(':method :url :status - :req[content-length] :response-time ms - :body'))
-morgan.token('body', (req, res) => JSON.stringify(req.body))
+morgan.token('body', (req) => JSON.stringify(req.body))
 
 app.use(express.json())
 //Main page
 app.get('build/index.html', (req, res) => {
-    res.send('<h1>Hello World!</h1>')
+  res.send('<h1>Hello World!</h1>')
 })
 
 //Get all items method
@@ -28,10 +28,10 @@ app.get('/api/persons', (req, res) => {
 //Get info method
 app.get('/api/info', (req ,res) => {
   const date = new Date()
-  Person.countDocuments({ "_id": { "$exists": true } })
-    .then(result =>{
+  Person.countDocuments({ '_id': { '$exists': true } })
+    .then(result => {
       res.send(`Phonebook has info for ${result} people\n${date}`)
-  })
+    })
 })
 
 //Get item by id method
@@ -50,19 +50,19 @@ app.get('/api/persons/:id', (req, res, next) => {
 //Delete method
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-  .then(result => {
-    res.status(204).end()
-  })
-  .catch(error => next(error))
+    .then(() => {
+      res.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
   const { name, number } = req.body
 
   Person.findByIdAndUpdate(
-    req.params.id, 
-    { name, number }, 
-    { new: true, runValidators: true, context: 'query'}
+    req.params.id,
+    { name, number },
+    { new: true, runValidators: true, context: 'query' }
   )
     .then(updatePerson => {
       res.json(updatePerson)
@@ -80,10 +80,10 @@ app.post('/api/persons', (req, res, next) => {
   })
 
   person.save()
-    .then(savedPerson =>{
+    .then(savedPerson => {
       res.json(savedPerson)
-  })
-  .catch(error => next(error))
+    })
+    .catch(error => next(error))
 })
 
 
@@ -105,5 +105,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 })
